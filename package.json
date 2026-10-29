@@ -1,0 +1,15 @@
+{
+  "name": "fintrack",
+  "private": true,
+  "scripts": {
+    "install:all": "npm --prefix server install && npm --prefix client install",
+    "dev": "npm --prefix server run dev & npm --prefix client run dev",
+    "build": "npm --prefix client run build",
+    "render-build": "npm run install:all && npm run build",
+    "start": "npm --prefix server start",
+    "test": "npm --prefix server test"
+  },
+  "engines": {
+    "node": ">=20.19"
+  }
+}
