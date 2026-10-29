@@ -1,0 +1,33 @@
+{
+  "name": "fintrack-server",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "NODE_ENV=production node src/server.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "dependencies": {
+    "bcryptjs": "latest",
+    "compression": "latest",
+    "cookie-parser": "latest",
+    "cors": "latest",
+    "dotenv": "latest",
+    "express": "latest",
+    "express-rate-limit": "latest",
+    "helmet": "latest",
+    "jsonwebtoken": "latest",
+    "mongoose": "latest",
+    "morgan": "latest",
+    "node-cron": "latest",
+    "zod": "latest",
+    "nodemailer": "latest"
+  },
+  "engines": {
+    "node": ">=20.19"
+  },
+  "devDependencies": {
+    "supertest": "latest",
+    "mongodb-memory-server": "latest"
+  }
+}
