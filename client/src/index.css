@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+/* Design tokens (ui-ux-pro-max: Modern Dark fintech, trust blue + profit green) */
+@theme {
+  --font-sans: "Fira Sans", system-ui, sans-serif;
+  --font-mono: "Fira Code", ui-monospace, monospace;
+  --color-ink-950: #080d1a;
+  --color-ink-900: #0f172a;
+  --color-ink-800: #131c33;
+  --color-ink-700: #1b2644;
+  --color-brand: #3b82f6;
+  --color-brand-deep: #1e40af;
+  --color-brand-soft: #60a5fa;
+  --color-gain: #34d399;
+  --color-loss: #f87171;
+  --color-warn: #fbbf24;
+  --shadow-glow: 0 0 40px -10px rgba(59, 130, 246, 0.45);
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 20px 40px -24px rgba(0, 0, 0, 0.6);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-float1: float1 18s ease-in-out infinite;
+  --animate-float2: float2 22s ease-in-out infinite;
+  @keyframes float1 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(60px, 40px) scale(1.15); } }
+  @keyframes float2 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-70px, -30px) scale(1.1); } }
+}
+
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+
+@layer base {
+  *, ::after, ::before, ::backdrop, ::file-selector-button { border-color: rgb(255 255 255 / 0.1); }
+  :root { color-scheme: dark; }
+  html, body, #root { min-height: 100%; }
+  body { @apply bg-ink-900 text-slate-200 font-sans antialiased; }
+  ::selection { background: rgba(59, 130, 246, 0.4); }
+}
+
+@utility btn {
+  @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition duration-200 ease-expo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 disabled:cursor-not-allowed disabled:opacity-50 active:scale-[0.97];
+  min-height: 44px;
+}
+
+@layer components {
+  .card { @apply relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5 shadow-card backdrop-blur-xl transition-colors duration-300; }
+  .card::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.3s;
+    background: radial-gradient(420px circle at var(--x, 50%) var(--y, 50%), rgba(96, 165, 250, 0.13), transparent 45%);
+  }
+  .card:hover { @apply border-white/15; }
+  .card:hover::before { opacity: 1; }
+  .input { @apply w-full rounded-xl border border-white/10 bg-ink-950/60 px-3.5 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 outline-none transition duration-200 focus:border-brand focus:ring-2 focus:ring-brand/30; }
+  .btn-primary { @apply btn bg-linear-to-b from-brand to-brand-deep text-white shadow-glow hover:brightness-110; }
+  .btn-ghost { @apply btn border border-white/10 bg-white/[0.03] text-slate-200 hover:bg-white/[0.08]; }
+  .btn-danger { @apply btn border border-loss/30 bg-loss/10 text-loss hover:bg-loss/20; }
+  .label { @apply mb-1.5 block text-xs font-medium uppercase tracking-wider text-slate-400; }
+  .num { @apply font-mono tabular-nums; }
+  .th { @apply px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-400; }
+  .td { @apply px-4 py-3 text-sm; }
+}
+
+.skeleton { position: relative; overflow: hidden; @apply rounded-xl bg-white/[0.05]; }
+.skeleton::after { content: ''; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.07), transparent); animation: shimmer 1.6s infinite; }
+.grad-text { background: linear-gradient(120deg, #fff 20%, #93c5fd 60%, #34d399); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.grid-bg { background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px); background-size: 44px 44px; mask-image: radial-gradient(ellipse at top, #000 20%, transparent 70%); }
+
+input[type='number']::-webkit-inner-spin-button, input[type='number']::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+input[type='number'] { -moz-appearance: textfield; appearance: textfield; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #243152; border-radius: 10px; border: 3px solid transparent; background-clip: content-box; }
+::-webkit-scrollbar-thumb:hover { background: #3a4d82; border: 3px solid transparent; background-clip: content-box; }
+@supports not selector(::-webkit-scrollbar) { * { scrollbar-width: thin; scrollbar-color: #243152 transparent; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
